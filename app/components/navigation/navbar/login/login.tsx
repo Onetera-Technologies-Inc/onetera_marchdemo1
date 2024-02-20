@@ -1,15 +1,17 @@
 "use client";
-import { Form, Input, Button, Checkbox } from "antd";
+
+import React from "react";
+import { Card, Form, Input, Button, Checkbox } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import styles from "../Navbar.module.css";
 
 const Login = () => {
   const router = useRouter();
 
   const onFinish = (values: any) => {
-    if (router) {
-      router.push("/welcome");
-    }
+    console.log("Success:", values);
+    router.push("");
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -17,45 +19,67 @@ const Login = () => {
   };
 
   return (
-    <div style={{ maxWidth: "300px", margin: "auto", marginTop: "50px" }}>
-      <Form
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
-        >
-          <Input />
-        </Form.Item>
+    <div className={styles.authContainer}>
+      <Card className={styles.authCard}>
+        <h1 className={styles.title}>Login</h1>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
+        {/* <div className={styles.logo}>
+          <img
+            src="/path-to-your-logo.png"
+            alt="Company Logo"
+            style={{ maxHeight: "32px" }}
+          />
+        </div> */}
 
-        <Form.Item
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{ offset: 8, span: 16 }}
+        <Form
+          name="login"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
         >
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+          <Form.Item
+            name="email"
+            rules={[{ required: true, message: "Please input your email!" }]}
+          >
+            <Input placeholder="Email" />
+          </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Login
-          </Button>
-        </Form.Item>
-      </Form>
-      <Link href="/signup">Do not have an account? Sign up</Link>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password placeholder="Password" />
+          </Form.Item>
+
+          <Form.Item name="remember" valuePropName="checked">
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Log In
+            </Button>
+          </Form.Item>
+        </Form>
+
+        <div style={{ textAlign: "center", margin: "16px 0" }}>
+          <Link href="/forgot-password">Forgot Password?</Link>
+        </div>
+
+        <div style={{ textAlign: "center", margin: "16px 0" }}>
+          Do not have an account? <Link href="/signup">Sign Up</Link>
+        </div>
+
+        <div style={{ textAlign: "center", margin: "16px 0" }}>
+          — or log in with —
+        </div>
+
+        <div className={styles.socialLogins}>
+          <Button className={styles.socialButton}>Google</Button>
+          <Button className={styles.socialButton}>Apple</Button>
+        </div>
+      </Card>
     </div>
   );
 };

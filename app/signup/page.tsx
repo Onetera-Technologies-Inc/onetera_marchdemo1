@@ -1,9 +1,9 @@
 import React from "react";
-import Signup from "../components/navigation/navbar/signup/signup";
+import Signup from "../components/Navigation/Navbar/Signup/signup";
 
 const SignUpPage = () => {
   return (
-    <div style={{ maxWidth: "300px", margin: "auto", marginTop: "50px" }}>
+    <div>
       <Signup />
     </div>
   );

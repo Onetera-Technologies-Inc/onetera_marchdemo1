@@ -1,7 +1,9 @@
 "use client";
 
-import { Form, Input, Button } from "antd";
+import React from "react";
+import { Form, Input, Button, Checkbox, Row, Col, Card } from "antd";
 import Link from "next/link";
+import styles from "../Navbar.module.css";
 
 const Signup = () => {
   const [form] = Form.useForm();
@@ -10,110 +12,139 @@ const Signup = () => {
     console.log("Received values of form: ", values);
   };
 
-  const onPasswordChange = () => {
-    form.validateFields(["retypePassword"]);
-  };
-
   return (
-    <div style={{ maxWidth: "400px", margin: "0 auto", padding: "20px" }}>
-      <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
-        <Form.Item
-          name="fullName"
-          label="Full Name"
-          rules={[{ required: true, message: "Please input your full name!" }]}
+    <div className={styles.authContainer}>
+      <Card className={styles.authCard}>
+        <h1 className={styles.title}>Sign up</h1>
+        <Form
+          form={form}
+          name="register"
+          onFinish={onFinish}
+          scrollToFirstError
+          layout="vertical"
         >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="lastName"
-          label="Last Name"
-          rules={[{ required: true, message: "Please input your last name!" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="address"
-          label="Address"
-          rules={[{ required: true, message: "Please input your address!" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="phoneNumber"
-          label="Phone Number"
-          rules={[
-            { required: true, message: "Please input your phone number!" },
-          ]}
-        >
-          <Input style={{ width: "100%" }} />
-        </Form.Item>
-
-        <Form.Item
-          name="email"
-          label="E-mail"
-          rules={[
-            {
-              type: "email",
-              message: "The input is not valid E-mail!",
-            },
-            {
-              required: true,
-              message: "Please input your E-mail!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="password"
-          label="Password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
-          hasFeedback
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="retypePassword"
-          label="Retype Password"
-          dependencies={["password"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Please confirm your password!",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error("The two passwords that you entered do not match!")
-                );
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="firstName"
+                label="First Name"
+                rules={[
+                  { required: true, message: "Please input your first name!" },
+                ]}
+              >
+                <Input placeholder="First Name" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="lastName"
+                label="Last Name"
+                rules={[
+                  { required: true, message: "Please input your last name!" },
+                ]}
+              >
+                <Input placeholder="Last Name" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              {
+                type: "email",
+                message: "The input is not valid E-mail!",
               },
-            }),
-          ]}
-        >
-          <Input.Password onChange={onPasswordChange} />
-        </Form.Item>
+              {
+                required: true,
+                message: "Please input your E-mail!",
+              },
+            ]}
+          >
+            <Input placeholder="Placeholder" />
+          </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Register
-          </Button>
-        </Form.Item>
-      </Form>
-      <Link href="/login">Already have an account? Login</Link>
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+            hasFeedback
+          >
+            <Input.Password placeholder="Placeholder text" />
+          </Form.Item>
+
+          <Form.Item
+            name="confirm"
+            label="Confirm Password"
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Please confirm your password!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(
+                      "The two passwords that you entered do not match!"
+                    )
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password placeholder="Placeholder" />
+          </Form.Item>
+
+          <Form.Item
+            name="agreement"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value
+                    ? Promise.resolve()
+                    : Promise.reject(new Error("Should accept agreement")),
+              },
+            ]}
+          >
+            <Checkbox>
+              I agree to the Terms of Service and Privacy Policy
+              <span style={{ color: "red", margin: "5px" }}>*</span>
+            </Checkbox>
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={styles.submitButton}
+              block
+            >
+              Sign In
+            </Button>
+          </Form.Item>
+        </Form>
+        <div style={{ textAlign: "center", margin: "16px 0" }}>
+          Already have an account? <Link href="/login">Login</Link>
+        </div>
+        <div style={{ textAlign: "center", margin: "16px 0" }}>
+          — or log in with —
+        </div>
+        <div className={styles.socialLogins}>
+          <Button className={styles.socialButton}>Google</Button>
+          <Button className={styles.socialButton}>Apple</Button>
+        </div>
+      </Card>
     </div>
   );
 };

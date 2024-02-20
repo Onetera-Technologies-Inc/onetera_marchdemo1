@@ -1,8 +1,8 @@
-import Login from "../components/navigation/navbar/login/login";
+import Login from "../components/Navigation/Navbar/Login/login";
 
 const LoginPage = () => {
   return (
-    <div style={{ maxWidth: "300px", margin: "auto", marginTop: "50px" }}>
+    <div>
       <Login />
     </div>
   );
