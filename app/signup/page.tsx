@@ -1,5 +1,5 @@
 import React from "react";
-import Signup from "../components/Navigation/Navbar/Signup/signup";
+import Signup from "../components/navigation/navbar/Signup/signup";
 
 const SignUpPage = () => {
   return (

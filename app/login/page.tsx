@@ -1,4 +1,4 @@
-import Login from "../components/Navigation/Navbar/Login/login";
+import Login from "../components/navigation/navbar/Login/login";
 
 const LoginPage = () => {
   return (
