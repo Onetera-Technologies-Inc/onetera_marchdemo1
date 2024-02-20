@@ -4,7 +4,7 @@ import React from "react";
 import { Card, Form, Input, Button, Checkbox } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import styles from "../Navbar.module.css";
+import styles from "../../navbar/Navbar.module.css";
 
 const Login = () => {
   const router = useRouter();
