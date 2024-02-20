@@ -1,46 +1,64 @@
-import { Card, Timeline, Statistic, Row, Col } from "antd";
+import { Card, Statistic, Row, Col } from "antd";
+import ActivityLogScreen from "./activityLog/activityLog";
+import { ArrowUpOutlined } from "@ant-design/icons";
+import styles from "./AdminOverviewSection.module.css";
 
 const AdminOverviewSection = () => {
   return (
     <>
       <Row gutter={16}>
         <Col span={8}>
-          <Card title="Activity Log" style={{ minHeight: "200px" }}>
-            {/* <Timeline>
-              <Timeline.Item>
-                Applicant A56B7BZ92 for roofing permit application approved
-              </Timeline.Item>
-            </Timeline> */}
-            <a href="#">See all</a>
+          <Card title="Activity Log" className={styles.cardContainer}>
+            <div className={styles.cardContent}>
+              <ActivityLogScreen />
+            </div>
           </Card>
         </Col>
-        <Col span={8}>hh</Col>
         <Col span={8}>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Card>
-                {/* <Statistic
-                  title="Average application processing time"
+          <Card
+            title="Application Status Distribution"
+            className={styles.cardContainer}
+          >
+            <div className={styles.cardContent}>
+              Doughnut chart illustrating the distribution of approved, denied,
+              and pending applications
+            </div>
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card className={styles.cardContainer}>
+            <Card bordered={false}>
+              <div className={styles.cardContent}>
+                <div className={styles.statisticTitle}>
+                  Average application processing time
+                </div>
+                <Statistic
                   value={3}
+                  precision={0}
+                  valueStyle={{ color: "#3f8600" }}
                   suffix="days"
                 />
-                j */}
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card>
-                {/* <Statistic
-                  title="Average incoming applications per day"
+                <div>1.8% Up from last month</div>
+              </div>
+            </Card>
+            <br />
+            <Card bordered={false}>
+              <div className={styles.cardContent}>
+                <div className={styles.statisticTitle}>
+                  Average incoming applications per day
+                </div>
+                <Statistic
                   value={8}
+                  precision={0}
+                  valueStyle={{ color: "#3f8600" }}
                   suffix="applications"
                 />
-                p */}
-              </Card>
-            </Col>
-          </Row>
+                <div>1.8% Up from last month</div>
+              </div>
+            </Card>
+          </Card>
         </Col>
       </Row>
-      {/* You can add more rows or cards as needed */}
     </>
   );
 };
