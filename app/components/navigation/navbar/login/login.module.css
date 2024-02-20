@@ -1,0 +1,61 @@
+.authContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2458a5;
+    height: fit-content;
+  }
+  
+  .authCard {
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: white;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .inputItem {
+    margin-bottom: 1rem;
+  }
+  
+  .authButton {
+    width: 100%;
+    background: #1890ff;
+    border-color: #1890ff;
+  }
+  
+  .link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .orSeparator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 2rem 0;
+  }
+  
+  .line {
+    flex-grow: 1;
+    border: none;
+    border-top: 1px solid #e8e8e8;
+  }
+  
+  .socialLogins {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .socialButton {
+    margin: 0 0.5rem;
+    font-size: 16px;
+  }
+  
