@@ -3,7 +3,7 @@
 import React from "react";
 import { Form, Input, Button, Checkbox, Row, Col, Card } from "antd";
 import Link from "next/link";
-import styles from "../../navbar/Navbar.module.css";
+import styles from "../Navbar.module.css";
 
 const Signup = () => {
   const [form] = Form.useForm();
