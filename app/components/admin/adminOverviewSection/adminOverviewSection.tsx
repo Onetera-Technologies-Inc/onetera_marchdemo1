@@ -1,7 +1,7 @@
 import { Card, Statistic, Row, Col } from "antd";
 import ActivityLogScreen from "./activityLog/activityLog";
 import { ArrowUpOutlined } from "@ant-design/icons";
-import styles from "./AdminOverviewSection.module.css";
+import styles from "./adminOverviewSection.module.css";
 
 const AdminOverviewSection = () => {
   return (
