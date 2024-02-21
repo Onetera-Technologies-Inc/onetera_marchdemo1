@@ -20,7 +20,7 @@ const ApplicationReview: React.FC<ApplicationReviewProps> = ({
           <AdditionalApplicantDetails />
         </Col>
         <Col span={14}>
-          <AdminChatInterface applicantId={applicantId} />
+          <AdminChatInterface />
         </Col>
       </Row>
     </>
