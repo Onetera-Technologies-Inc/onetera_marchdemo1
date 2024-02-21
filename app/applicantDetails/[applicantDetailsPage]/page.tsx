@@ -1,6 +1,5 @@
-import AdminLayout from "@/app/components/admin/adminLayout/adminLayout";
+import ApplicationReview from "@/app/components/admin/applicationReview/applicationReview";
 import AdminNavbar from "@/app/components/navigation/adminNavbar/adminNavbar";
-import { Col, Row } from "antd";
 
 const ApplicantDetailsPage = ({
   params,
@@ -12,11 +11,7 @@ const ApplicantDetailsPage = ({
   return (
     <>
       <AdminNavbar />
-      <h3>Application Review</h3>
-      <Row>
-        <Col span={12}></Col>
-        <Col span={12}></Col>
-      </Row>
+      <ApplicationReview applicantId={applicantId} />
     </>
   );
 };
