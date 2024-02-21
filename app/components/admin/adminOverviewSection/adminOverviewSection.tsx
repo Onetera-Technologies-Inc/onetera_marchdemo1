@@ -6,7 +6,7 @@ import styles from "./adminOverviewSection.module.css";
 const AdminOverviewSection = () => {
   return (
     <>
-      <Row gutter={16}>
+      {/* <Row gutter={16}>
         <Col span={8}>
           <Card title="Activity Log" className={styles.cardContainer}>
             <div className={styles.cardContent}>
@@ -58,7 +58,42 @@ const AdminOverviewSection = () => {
             </Card>
           </Card>
         </Col>
-      </Row>
+      </Row> */}
+      <div style={{ background: "#ECECEC", padding: "30px" }}>
+        <Row gutter={16}>
+          <Col span={12}>
+            <h1>Permitting Applications</h1>
+            <p>Subtitle text description goes here.</p>
+          </Col>
+          <Col span={4}>
+            <Card>
+              <Statistic
+                title="Need Review"
+                value={6}
+                valueStyle={{ color: "#3f8600" }}
+              />
+            </Card>
+          </Col>
+          <Col span={4}>
+            <Card>
+              <Statistic
+                title="Pending Documents"
+                value={2}
+                valueStyle={{ color: "#cf1322" }}
+              />
+            </Card>
+          </Col>
+          <Col span={4}>
+            <Card>
+              <Statistic
+                title="Applications Today"
+                value={14}
+                valueStyle={{ color: "#234abc" }}
+              />
+            </Card>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 };
