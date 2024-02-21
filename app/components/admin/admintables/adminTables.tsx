@@ -11,6 +11,10 @@ interface AdminTablesProps {
 const AdminTables = ({ data }: AdminTablesProps) => {
   const router = useRouter();
 
+  const onRowClick = (id: string) => {
+    router.push(`/applicantDetails/${id}`);
+  };
+
   const columns = [
     {
       title: "ID",
@@ -69,7 +73,19 @@ const AdminTables = ({ data }: AdminTablesProps) => {
     },
   ];
 
-  return <Table columns={columns} dataSource={data} />;
+  return (
+    <Table
+      onRow={(record) => {
+        return {
+          onClick: () => {
+            onRowClick(record.id);
+          },
+        };
+      }}
+      columns={columns}
+      dataSource={data}
+    />
+  );
 };
 
 export default AdminTables;

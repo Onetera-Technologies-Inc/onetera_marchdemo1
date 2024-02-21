@@ -24,7 +24,6 @@ const Login = () => {
     if (values.email === "admin") {
       router.push("users/admin");
     } else {
-      // Assuming 'resident' as default userType
       router.push("users/resident");
     }
   };
