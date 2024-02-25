@@ -184,11 +184,10 @@
 
 import React, { useState, useEffect } from "react";
 import { List, Input, Button, Avatar } from "antd";
-import { SendOutlined } from "@ant-design/icons";
+import { SendOutlined, PlusOutlined } from "@ant-design/icons";
+import styles from "./adminChatInterface.module.css";
 
-const initialMessages = [
-  { id: 1, sender: "admin", content: "Hi! How can we assist you today?" },
-];
+const initialMessages = [{ id: 1, sender: "", content: "" }];
 
 const AdminChatInterface = () => {
   const [messages, setMessages] = useState(initialMessages);
@@ -197,16 +196,14 @@ const AdminChatInterface = () => {
 
   const adminMessages = [
     "Thank you for your request. Can you please provide more details about your project?",
-    "Could you specify the size and type of roofing materials you plan to use?",
-    "Do you have the necessary documents ready for submission?",
-    "Your application is complete. We will notify you once the review process is done.",
   ];
 
   const userMessages = [
-    "I need assistance with my roofing permit application.",
-    "The project is a 500 sq ft residential roofing with ceramic tiles.",
-    "Yes, I have all the documents prepared.",
-    "Thank you for the update!",
+    `Hi Christine, 
+    I am a government administrative official reviewing your standard roofing permit submitted on 02-03-2024. Your roofing permit application is in process! To move forward, we need:
+    Roofing materials specs.
+    Roof slope/pitch details.
+    Please either reply with the documents listed above in the chat or upload them in your application hub.`,
   ];
 
   const handleSendMessage = () => {
@@ -239,26 +236,25 @@ const AdminChatInterface = () => {
   };
 
   return (
-    <div className="chat-container">
+    <div className={styles.chatcontainer}>
       <List
         itemLayout="horizontal"
         dataSource={messages}
-        renderItem={(item) => (
-          <List.Item key={item.id}>
-            <List.Item.Meta
-              avatar={
-                <Avatar
-                  style={{
-                    backgroundColor:
-                      item.sender === "admin" ? "#f56a00" : "#87d068",
-                  }}
-                />
-              }
-              description={item.content}
-            />
-          </List.Item>
-        )}
+        renderItem={(item) =>
+          item.sender === "admin" ? (
+            <List.Item key={item.content} className={styles.adminmessage}>
+              {item.content}
+            </List.Item>
+          ) : (
+            item.content && (
+              <List.Item key={item.content} className={styles.usermessage}>
+                {item.content}
+              </List.Item>
+            )
+          )
+        }
       />
+
       <div className="chat-prompts">
         {userMessages.map((message, index) => (
           <p
@@ -270,20 +266,43 @@ const AdminChatInterface = () => {
           </p>
         ))}
       </div>
-      <Input
-        value={userInput}
-        onChange={(e) => setUserInput(e.target.value)}
-        placeholder="Type your message here..."
-        style={{ marginBottom: "10px" }}
-        suffix={
-          <Button
-            onClick={handleSendMessage}
-            type="primary"
-            icon={<SendOutlined />}
-            disabled={!userInput.trim()}
-          />
-        }
-      />
+      <div className="chat-interface-container">
+        <Input
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          placeholder="Type your request here"
+          prefix={
+            <Button
+              icon={<PlusOutlined />}
+              style={{
+                border: "none",
+                background: "transparent",
+                color: "#1890ff",
+              }}
+            />
+          }
+          suffix={
+            <Button
+              onClick={handleSendMessage}
+              type="primary"
+              icon={<SendOutlined />}
+              style={{
+                border: "none",
+                background: "transparent",
+                color: "#1890ff",
+              }}
+              disabled={!userInput.trim()}
+            />
+          }
+          style={{
+            borderRadius: "16px",
+            padding: "4px 16px",
+            border: "1px solid #d9d9d9",
+            boxShadow: "none",
+            height: "100px",
+          }}
+        />
+      </div>
     </div>
   );
 };

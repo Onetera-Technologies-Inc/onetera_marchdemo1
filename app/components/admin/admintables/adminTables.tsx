@@ -3,6 +3,7 @@
 import { Application } from "@/app/constants/interfaces";
 import { Table, Tag, Space, Button } from "antd";
 import { useRouter } from "next/navigation";
+import { MenuOutlined } from "@ant-design/icons";
 
 interface AdminTablesProps {
   data: Application[];
@@ -28,14 +29,18 @@ const AdminTables = ({ data }: AdminTablesProps) => {
       sorter: (a: Application, b: Application) => a.name.localeCompare(b.name),
     },
     {
-      title: "Reason",
+      title: "Ineligibility Reason",
       dataIndex: "reason",
       key: "reason",
+      onFilter: (value: any, record: { name: string | any[] }) =>
+        record.name.includes(value),
     },
     {
-      title: "Submission Date",
+      title: "Date",
       dataIndex: "submissionDate",
       key: "submissionDate",
+      sorter: (a: Application, b: Application) =>
+        a.submissionDate.localeCompare(b.submissionDate),
     },
     {
       title: "Type",
@@ -63,28 +68,33 @@ const AdminTables = ({ data }: AdminTablesProps) => {
       ),
     },
     {
-      title: "Action",
+      title: "Actions",
       key: "action",
       render: (_: any, record: Application) => (
         <Space size="middle">
           <Button type="primary">Review</Button>
+          <Button icon={<MenuOutlined />} />
         </Space>
       ),
     },
   ];
 
   return (
-    <Table
-      onRow={(record) => {
-        return {
-          onClick: () => {
-            onRowClick(record.id);
-          },
-        };
-      }}
-      columns={columns}
-      dataSource={data}
-    />
+    <>
+      <Table
+        onRow={(record) => {
+          return {
+            onClick: () => {
+              onRowClick(record.id);
+            },
+          };
+        }}
+        pagination={{ pageSize: 10 }}
+        columns={columns}
+        dataSource={data}
+        // footer={() => <h6>Table Item Count: {data.length}</h6>}
+      />
+    </>
   );
 };
 

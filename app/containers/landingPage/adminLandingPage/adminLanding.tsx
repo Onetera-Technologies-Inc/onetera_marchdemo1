@@ -2,24 +2,24 @@ import AdminOverviewSection from "@/app/components/admin/adminOverviewSection/ad
 import AdminNavbar from "@/app/components/navigation/adminNavbar/adminNavbar";
 import styles from "./adminLandingPage.module.css";
 import AdminTables from "@/app/components/admin/admintables/adminTables";
+import ResolvedApplications from "@/app/components/admin/admintables/resolvedapplications";
 import { unresolvedApplicationsData } from "@/app/constants/dataConstants";
 
 const AdminWelcomePage = () => {
   return (
     <div>
       <AdminNavbar />
+      <div>
+        <AdminOverviewSection />
+      </div>
       <section className={styles.adminLandingPageContainer}>
-        <h3>Overview</h3>
-        <div>
-          <AdminOverviewSection />
-        </div>
         <div>
           <h4>Unresolved Applications</h4>
           <AdminTables data={unresolvedApplicationsData} />
         </div>
         <div>
           <h4>Resolved Applications</h4>
-          <AdminTables data={unresolvedApplicationsData} />
+          <ResolvedApplications />
         </div>
       </section>
     </div>

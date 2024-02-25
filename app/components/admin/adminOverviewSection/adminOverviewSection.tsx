@@ -59,11 +59,13 @@ const AdminOverviewSection = () => {
           </Card>
         </Col>
       </Row> */}
-      <div style={{ background: "#ECECEC", padding: "30px" }}>
-        <Row gutter={16}>
-          <Col span={12}>
-            <h1>Permitting Applications</h1>
-            <p>Subtitle text description goes here.</p>
+      <div style={{ background: "#333C4E", padding: "30px" }}>
+        <Row gutter={16} justify="space-around" align="middle">
+          <Col span={8}>
+            <div style={{ color: "white" }}>
+              <h1 style={{ color: "white" }}>Permitting Applications</h1>
+              <p>Subtitle text description goes here.</p>
+            </div>
           </Col>
           <Col span={4}>
             <Card>

@@ -1,5 +1,6 @@
-.chatcontainer {
-    max-width: 350px;
+
+  .chatcontainer {
+    padding: 20px;
     background: white;
     border-radius: 8px;
     overflow: hidden;
@@ -9,42 +10,83 @@
     flex-direction: column;
     justify-content: space-between;
   }
+
+  .chatinterfacecontainer {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    display: block;
+    flex-direction: column;
+    justify-content: space-between;
+  }
   
-  .chatmessages {
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 16px;
+  .inputcontainer {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    justify-content: space-between;
+    padding: 8px;
   }
   
-  .chatmessage1 {
-    background: #f0f2f5;
+  .usermessage {
+    display: block;
+  clear: both;
+  padding: 10px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+    max-width: 60%;
+    background-color: #1890ff;
+    color: white;
     padding: 8px;
     border-radius: 8px;
-    max-width: 80%;
-    align-self: flex-start;
-  }
-  
-  .chatmessage.admin {
-    background: #e6f7ff;
+    word-wrap: break-word;
+    margin: 8px 0;
+    color: beige;
     align-self: flex-end;
+    float: right;
   }
   
-  .sendbutton {
-    height: 40px;
-    border-radius: 0;
+  .adminmessage {
+    display: block;
+  clear: both;
+  padding: 10px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+    max-width: 60%;
+    background-color: white;
+    color: black;
+    padding: 8px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    margin: 8px 0;
+    align-self: flex-start;
+    border: 1px solid #d9d9d9;
   }
   
   .ant-list-item {
-    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 0;
+    padding-right: 0;
   }
   
-  .ant-input-textarea {
-    border-radius: 0;
-    border: none;
-    resize: none;
+  .ant-input {
+    border-radius: 16px;
+    padding: 4px 16px;
+    border: 1px solid #d9d9d9;
+    box-shadow: none;
   }
   
+  .ant-input-suffix {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Additional styles may be necessary to match your exact layout requirements */
   
