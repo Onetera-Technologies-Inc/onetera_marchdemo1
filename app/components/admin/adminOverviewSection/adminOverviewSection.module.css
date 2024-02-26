@@ -1,0 +1,26 @@
+
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+  }
+
+  
+  .statisticTitle {
+    margin-bottom: 16px; 
+  }
+  
+  .cardContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: 100%; 
+  }
+  
+  /* Responsive settings */
+  @media screen and (max-width: 768px) {
+    .cardContainer {
+      height: auto; 
+    }
+  }
+  

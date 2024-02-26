@@ -1,0 +1,92 @@
+
+  .chatcontainer {
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .chatinterfacecontainer {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    display: block;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .inputcontainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px;
+  }
+  
+  .usermessage {
+    display: block;
+  clear: both;
+  padding: 10px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+    max-width: 60%;
+    background-color: #1890ff;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    margin: 8px 0;
+    color: beige;
+    align-self: flex-end;
+    float: right;
+  }
+  
+  .adminmessage {
+    display: block;
+  clear: both;
+  padding: 10px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+    max-width: 60%;
+    background-color: white;
+    color: black;
+    padding: 8px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    margin: 8px 0;
+    align-self: flex-start;
+    border: 1px solid #d9d9d9;
+  }
+  
+  .ant-list-item {
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .ant-input {
+    border-radius: 16px;
+    padding: 4px 16px;
+    border: 1px solid #d9d9d9;
+    box-shadow: none;
+  }
+  
+  .ant-input-suffix {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Additional styles may be necessary to match your exact layout requirements */
+  

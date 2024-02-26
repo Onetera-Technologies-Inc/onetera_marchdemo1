@@ -9,9 +9,23 @@ import styles from "./login.module.css";
 const Login = () => {
   const router = useRouter();
 
+  // const onFinish = (values: any) => {
+  //   console.log("Success:", values);
+  //   if (values.email == "admin") {
+  //     router.push("/admin");
+  //   } else {
+  //     // router.push("/resident");
+  //     router.push("/resident?name=" + encodeURIComponent(values.email));
+  //   }
+  // };
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
-    router.push("");
+    if (values.email === "admin") {
+      router.push("users/admin");
+    } else {
+      router.push("users/resident");
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
