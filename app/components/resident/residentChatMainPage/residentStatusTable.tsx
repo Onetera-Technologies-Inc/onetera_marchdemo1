@@ -1,5 +1,12 @@
-import { Table, Tag } from "antd";
+import { Button, Col, Row, Space, Table, Tag } from "antd";
 import { Key } from "react";
+import {
+  EditOutlined,
+  PhoneOutlined,
+  MailOutlined,
+  EllipsisOutlined,
+  FileTextOutlined,
+} from "@ant-design/icons";
 
 const applicationData = [
   {
@@ -8,7 +15,6 @@ const applicationData = [
     city: "Glendale",
     dateSubmitted: "02-04-2024",
     status: "Documents Requested",
-    actions: "...", // replace with actual action components or functions
   },
   // ... other entries
 ];
@@ -47,19 +53,22 @@ const columns = [
     },
   },
   {
-    title: "ACTIONS",
-    dataIndex: "actions",
-    key: "actions",
-    // Add components or functions for the actions
+    title: "Actions",
+    key: "action",
+    render: (_: any) => (
+      <Space size="middle">
+        <Button icon={<PhoneOutlined />} shape="circle" />
+        <Button icon={<MailOutlined />} shape="circle" />
+        <Button icon={<EllipsisOutlined />} shape="circle" />
+      </Space>
+    ),
   },
 ];
 
 const ResidentStatusTable = () => (
   <div>
-    <h2>
-      Hi Jane, here are your current affordable housing applications with their
-      statuses.
-    </h2>
+    Hi Jane, here are your current affordable housing applications with their
+    statuses.
     <Table columns={columns} dataSource={applicationData} pagination={false} />
   </div>
 );

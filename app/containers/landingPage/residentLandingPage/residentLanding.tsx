@@ -1,4 +1,3 @@
-import AdminOverviewSection from "@/app/components/admin/adminOverviewSection/adminOverviewSection";
 import AdminNavbar from "@/app/components/navigation/adminNavbar/adminNavbar";
 import ResidentOverviewSection from "@/app/components/resident/residentOverviewSection/residentOverviewSection";
 
