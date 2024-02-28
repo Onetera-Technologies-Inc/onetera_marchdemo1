@@ -232,54 +232,62 @@ const ResidentChatMainPage = () => {
                 </Card>
               ))}
             </div>
-            {chatMessages.length > 0 &&
-              chatMessages.map((message, index) => (
-                <div
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginBottom: "10px",
-                    flexDirection:
-                      message.sender === "bot" ? "row" : "row-reverse",
-                  }}
-                >
-                  <Avatar
-                    style={{
-                      backgroundColor:
-                        message.sender === "bot" ? "#87d068" : "#1890ff",
-                      marginLeft: message.sender === "bot" ? "0" : "10px",
-                      marginRight: message.sender === "bot" ? "10px" : "0",
-                    }}
-                    icon={<UserOutlined />}
-                  />
+            {chatMessages.map(
+              (message, index) =>
+                message.text && (
                   <div
+                    key={index}
                     style={{
-                      backgroundColor:
-                        message.sender === "user" ? "#1890ff" : "#f0f0f0",
-                      color: message.sender === "user" ? "#fff" : "#000",
-                      padding: "10px",
-                      borderRadius: "10px",
-                      maxWidth: "80%",
+                      display: "flex",
+                      alignItems: "center",
+                      marginBottom: "10px",
+                      flexDirection:
+                        message.sender === "bot" ? "row" : "row-reverse",
                     }}
                   >
-                    <p style={{ margin: 0 }}>{message.text}</p>
+                    <Avatar
+                      style={{
+                        backgroundColor:
+                          message.sender === "bot" ? "#87d068" : "#1890ff",
+                        marginLeft: message.sender === "bot" ? "0" : "10px",
+                        marginRight: message.sender === "bot" ? "10px" : "0",
+                      }}
+                      icon={<UserOutlined />}
+                    />
+                    <div
+                      style={{
+                        backgroundColor:
+                          message.sender === "user" ? "#1890ff" : "#f0f0f0",
+                        color: message.sender === "user" ? "#fff" : "#000",
+                        padding: "10px",
+                        borderRadius: "10px",
+                        maxWidth: "80%",
+                      }}
+                    >
+                      <p style={{ margin: 0 }}>{message.text}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+            )}
             <div ref={endOfMessagesRef} />
           </div>
           <div style={{ borderTop: "1px solid #eaeaea", padding: "10px 20px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <TextArea
                 rows={2}
+                showCount
                 value={inputValue}
+                autoSize={false}
                 onChange={handleInputChange}
+                maxLength={100}
                 placeholder="Type your request here"
                 style={{
                   borderRadius: "20px",
                   padding: "10px 20px",
                   height: "120px",
+
+                  backgroundColor: "#F6F6F6",
+                  resize: "none",
                 }}
               />
               <Button
