@@ -63,8 +63,7 @@ const AdminOverviewSection = () => {
         <Row gutter={16} justify="space-around" align="middle">
           <Col span={8}>
             <div style={{ color: "white" }}>
-              <h1 style={{ color: "white" }}>Permitting Applications</h1>
-              <p>Subtitle text description goes here.</p>
+              <h1 style={{ color: "white" }}>Admin Dashboard</h1>
             </div>
           </Col>
           <Col span={4}>

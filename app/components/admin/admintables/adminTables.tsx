@@ -16,6 +16,21 @@ const AdminTables = ({ data }: AdminTablesProps) => {
     router.push(`/applicantDetails/${id}`);
   };
 
+  const getTagColor = (status: any) => {
+    switch (status) {
+      case "pending approval":
+        return "gold";
+      case "missing documentation":
+        return "volcano";
+      case "approved":
+        return "green";
+      case "rejected":
+        return "red";
+      default:
+        return "default";
+    }
+  };
+
   const columns = [
     {
       title: "ID",
@@ -51,13 +66,10 @@ const AdminTables = ({ data }: AdminTablesProps) => {
       title: "Status",
       key: "status",
       dataIndex: "status",
-      render: (_: any, { status }: { status: string[] }) => (
+      render: (status: any[]) => (
         <>
           {status.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
-            if (tag === "missing documentation") {
-              color = "volcano";
-            }
+            const color = getTagColor(tag.toLowerCase());
             return (
               <Tag color={color} key={tag}>
                 {tag.toUpperCase()}
