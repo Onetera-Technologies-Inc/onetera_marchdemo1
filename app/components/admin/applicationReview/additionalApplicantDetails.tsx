@@ -1,6 +1,6 @@
 import React from "react";
 import type { CollapseProps } from "antd";
-import { Collapse } from "antd";
+import { Card, Collapse } from "antd";
 
 const text = `
  hey hello!!
@@ -32,7 +32,12 @@ const AdditionalApplicantDetails: React.FC = () => {
 
   return (
     <>
-      <Collapse bordered={false} expandIconPosition="end" items={items} />
+      <Card
+        style={{ margin: "0 0 10px 0", padding: "0 " }}
+        bodyStyle={{ padding: "0" }}
+      >
+        <Collapse bordered={false} expandIconPosition="end" items={items} />
+      </Card>
     </>
   );
 };
