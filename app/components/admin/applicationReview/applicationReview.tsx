@@ -58,10 +58,10 @@ const ApplicationReview: React.FC<ApplicationReviewProps> = ({
         <Row gutter={20} style={{ height: "70vh" }}>
           <Col span={10}>
             <div>
-              <ReasonForIneligibility />
+              <ApplicationProfile applicantId={applicantId} />
             </div>
             <div>
-              <ApplicationProfile applicantId={applicantId} />
+              <ReasonForIneligibility />
             </div>
             <div>
               <AdditionalApplicantDetails />
@@ -79,7 +79,7 @@ const ApplicationReview: React.FC<ApplicationReviewProps> = ({
         style={{
           position: "absolute",
           right: "60px",
-          bottom: "60px",
+          bottom: "20px",
         }}
       >
         Submit

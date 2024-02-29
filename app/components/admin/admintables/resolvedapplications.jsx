@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Table, Tag, Space, Button } from 'antd';
+import { Table,  Space, Button } from 'antd';
 import {
   EllipsisOutlined,
   SyncOutlined,

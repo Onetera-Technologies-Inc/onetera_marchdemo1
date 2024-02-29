@@ -5,7 +5,7 @@ const ReasonForIneligibility = () => {
     <>
       <Card
         style={{ margin: "0 0 10px 0", padding: "0 2px 0 20px" }}
-        bodyStyle={{ padding: "0" }}
+        styles={{ body: { padding: 0 } }}
       >
         <h4>Reasons for ineligibility</h4>
         <h5>Document is missing</h5>

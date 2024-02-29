@@ -1,7 +1,6 @@
 import React from "react";
 import { Table, Button, Space, Typography, Badge, Row, Col } from "antd";
 import {
-  EditOutlined,
   PhoneOutlined,
   MailOutlined,
   FileTextOutlined,

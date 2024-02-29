@@ -34,7 +34,7 @@ const AdditionalApplicantDetails: React.FC = () => {
     <>
       <Card
         style={{ margin: "0 0 10px 0", padding: "0 " }}
-        bodyStyle={{ padding: "0" }}
+        styles={{ body: { padding: 0 } }}
       >
         <Collapse bordered={false} expandIconPosition="end" items={items} />
       </Card>

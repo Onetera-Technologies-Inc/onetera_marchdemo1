@@ -1,11 +1,8 @@
-import { Button, Col, Row, Space, Table, Tag } from "antd";
-import { Key } from "react";
+import { Button, Space, Table, Tag } from "antd";
 import {
-  EditOutlined,
   PhoneOutlined,
   MailOutlined,
   EllipsisOutlined,
-  FileTextOutlined,
 } from "@ant-design/icons";
 
 const applicationData = [

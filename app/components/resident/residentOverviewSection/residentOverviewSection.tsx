@@ -53,35 +53,7 @@ const ResidentOverviewSection = () => {
         <Paragraph>
           We are here to help. Select the service you need assistance with.
         </Paragraph>
-        {/* <Row gutter={16} justify="center" style={{ marginTop: "50px" }}>
-          <Col span={8}>
-            <Link href="/residentChatInterface" passHref>
-              <Card hoverable>
-                <Card.Meta
-                  title="Housing"
-                  description="Apply for affordable housing, Apply for section 8 voucher, Apply for public housing"
-                />
-              </Card>
-            </Link>
-          </Col>
 
-          <Col span={8}>
-            <Card hoverable>
-              <Card.Meta
-                title="Permit"
-                description="Apply for affordable housing, Apply for section 8 voucher, Apply for public housing"
-              />
-            </Card>
-          </Col>
-          <Col span={8}>
-            <Card hoverable>
-              <Card.Meta
-                title="Transportation"
-                description="Apply for affordable housing, Apply for section 8 voucher, Apply for public housing"
-              />
-            </Card>
-          </Col>
-        </Row> */}
         <Row gutter={16} style={{ marginTop: "80px" }}>
           {serviceCards.map((service, index) => (
             <Col span={8} key={index}>

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Input, Card, Typography, Avatar } from "antd";
-import { SendOutlined, PlusOutlined } from "@ant-design/icons";
+import { SendOutlined } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import { Upload, notification } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
