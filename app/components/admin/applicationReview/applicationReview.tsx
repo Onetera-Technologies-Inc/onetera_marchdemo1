@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import ReasonForIneligibility from "./reasonForIneligibility";
 import ApplicationProfile from "./applicantProfile";
 import AdditionalApplicantDetails from "./additionalApplicantDetails";
@@ -13,12 +13,14 @@ const ApplicationReview: React.FC<ApplicationReviewProps> = ({
 }) => {
   return (
     <>
-      <div
+      {/* <div
         style={{
           maxWidth: "1250px",
           margin: "0 auto",
           display: "flex",
           flexDirection: "column",
+          position: "relative",
+          paddingBottom: "50px",
         }}
       >
         <h3>Application Review</h3>
@@ -32,7 +34,56 @@ const ApplicationReview: React.FC<ApplicationReviewProps> = ({
             <AdminChatInterface />
           </Col>
         </Row>
+        <Button
+          type="primary"
+          style={{
+            position: "absolute",
+            right: "10px",
+            bottom: "10px",
+          }}
+        >
+          Submit
+        </Button>
+      </div> */}
+      <div
+        style={{
+          margin: "40px",
+          display: "flex",
+          flexDirection: "column",
+          position: "relative",
+          paddingBottom: "50px",
+        }}
+      >
+        <h3>Application Review</h3>
+        <Row gutter={20} style={{ height: "70vh" }}>
+          <Col span={10}>
+            <div>
+              <ReasonForIneligibility />
+            </div>
+            <div>
+              <ApplicationProfile applicantId={applicantId} />
+            </div>
+            <div>
+              <AdditionalApplicantDetails />
+            </div>
+          </Col>
+          <Col span={14}>
+            <div>
+              <AdminChatInterface />
+            </div>
+          </Col>
+        </Row>
       </div>
+      <Button
+        type="primary"
+        style={{
+          position: "absolute",
+          right: "60px",
+          bottom: "60px",
+        }}
+      >
+        Submit
+      </Button>
     </>
   );
 };

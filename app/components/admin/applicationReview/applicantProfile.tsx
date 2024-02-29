@@ -40,7 +40,7 @@ const ApplicationProfile: React.FC<ApplicationReviewProps> = ({
     <Card
       style={{
         width: "100%",
-        maxWidth: "700px",
+
         margin: "auto",
         marginBottom: "10px",
       }}
