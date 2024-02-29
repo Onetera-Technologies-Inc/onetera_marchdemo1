@@ -1,7 +1,7 @@
 import React from "react";
 import AdminWelcomePage from "@/app/containers/landingPage/adminLandingPage/adminLanding";
 
-const AdminLayout = () => {
+const AdminLayout = ({ children }: { children: any }) => {
   return <AdminWelcomePage />;
 };
 
