@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Table, Tag, Space, Button } from 'antd';
+import { Table,  Space, Button } from 'antd';
 import {
   EllipsisOutlined,
   SyncOutlined,
@@ -17,28 +17,10 @@ const ResolvedApplications = () => {
       lastUpdated: '02-04-2024',
       date: '02-04-2024',
       type: 'Parking Permit',
-      status: 'pending documents',
     },
     // ...more data
   ];
 
-  const getStatusTag = (status) => {
-    let color = 'default';
-    switch (status) {
-      case 'pending documents':
-        color = 'gold';
-        break;
-      case 'approved':
-        color = 'green';
-        break;
-      case 'denied':
-        color = 'red';
-        break;
-      default:
-        color = 'default';
-    }
-    return <Tag color={color}>{status.toUpperCase()}</Tag>;
-  };
 
   const columns = [
     {
@@ -66,12 +48,6 @@ const ResolvedApplications = () => {
       title: 'TYPE',
       dataIndex: 'type',
       key: 'type',
-    },
-    {
-      title: 'STATUS',
-      key: 'status',
-      dataIndex: 'status',
-      render: (status) => getStatusTag(status),
     },
     {
       title: 'ACTIONS',

@@ -1,6 +1,8 @@
 "use client";
-import { LoginOutlined, UserAddOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import Layout from "antd/lib/layout";
+import { LogoutOutlined } from "@ant-design/icons";
+import Link from "next/link";
 
 const { Header } = Layout;
 const AdminNavbar = () => {
@@ -10,9 +12,15 @@ const AdminNavbar = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        padding: "0 16px",
       }}
     >
-      Onetera
+      <div style={{ color: "white" }}>Onetera</div>
+      <Link href="/" passHref>
+        <Button type="primary" icon={<LogoutOutlined />}>
+          Logout
+        </Button>
+      </Link>
     </Header>
   );
 };

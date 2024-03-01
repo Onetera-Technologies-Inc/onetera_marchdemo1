@@ -1,7 +1,13 @@
+import AdminNavbar from "@/app/components/navigation/adminNavbar/adminNavbar";
+import ResidentOverviewSection from "@/app/components/resident/residentOverviewSection/residentOverviewSection";
+
 const ResidentWelcomePage = () => {
   return (
     <div>
-      <h1>Welcome, Resident!</h1>
+      <AdminNavbar />
+      <div>
+        <ResidentOverviewSection />
+      </div>
     </div>
   );
 };

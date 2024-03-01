@@ -14,7 +14,7 @@ const AdminWelcomePage = () => {
       </div>
       <section className={styles.adminLandingPageContainer}>
         <div>
-          <h4>Unresolved Applications</h4>
+          <h4>Unresolved Applications ({unresolvedApplicationsData.length})</h4>
           <AdminTables data={unresolvedApplicationsData} />
         </div>
         <div>

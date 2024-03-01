@@ -4,7 +4,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { Button, Input, Card, Typography, Avatar } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
-import { notification } from "antd";
+import { Upload, notification } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import ResidentStatusTable from "./residentStatusTable";
+import RequestDocumentUpload from "./requestDocumentUpload";
+import DocumentUploadList from "./documentUploadList";
+import AdminNavbar from "../../navigation/adminNavbar/adminNavbar";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -58,11 +63,36 @@ const ResidentChatMainPage = () => {
     }
   }, [chatMessages]);
 
+  useEffect(() => {
+    if (userAgreedToUpload) {
+      const statusMessage: ChatMessage = {
+        text: <DocumentUploadList />,
+        sender: "bot",
+      };
+      setChatMessages((prevMessages) => [...prevMessages, statusMessage]);
+
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          text: (
+            <Upload {...uploadProps}>
+              <Button icon={<UploadOutlined />}>
+                Please click here to Upload
+              </Button>
+            </Upload>
+          ),
+          sender: "bot",
+        },
+      ]);
+    }
+  }, [userAgreedToUpload]);
+
   // Function to handle the click on chat prompts
   const handlePromptClick = (prompt: string) => {
     setInputValue(prompt);
   };
 
+  // Function to handle the input change
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   };
@@ -71,8 +101,73 @@ const ResidentChatMainPage = () => {
     if (text.trim() !== "") {
       setChatMessages([...chatMessages, { text: text, sender: "user" }]);
 
+      //handle spanish
       setTimeout(() => {
-        let responseText = "Admin response";
+        let responseText = "";
+        if (text.includes("solicitudes de vivienda")) {
+          responseText =
+            "Estoy verificando tus solicitudes. ¿Puedes confirmar tu fecha de nacimiento?";
+        } else if (text.includes("ID 12345")) {
+          responseText =
+            "Gracias. Hemos actualizado tu solicitud con el ID 12345.";
+        } else {
+          let botResponse: ChatMessage = {
+            text: "I'm here to help! Can you provide the missing documents?",
+            sender: "bot",
+          };
+
+          // If the user's last message was about documents, ask for upload
+          if (text.toLowerCase().includes("documents")) {
+            botResponse.text =
+              "Please upload the necessary documents using the button below.";
+
+            setChatMessages((prevMessages) => [
+              ...prevMessages,
+              botResponse,
+              // Add a message component that allows document upload
+              {
+                text: (
+                  <Upload {...uploadProps}>
+                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                  </Upload>
+                ),
+                sender: "bot",
+              },
+            ]);
+          } else if (
+            text ==
+            "I want to check the status of my current affordable housing applications."
+          ) {
+            const statusMessage: ChatMessage = {
+              text: <ResidentStatusTable />,
+              sender: "bot",
+            };
+            setChatMessages((prevMessages) => [...prevMessages, statusMessage]);
+
+            const requestUpload: ChatMessage = {
+              text: (
+                <RequestDocumentUpload
+                  setUserAgreedToUpload={setUserAgreedToUpload}
+                />
+              ),
+              sender: "bot",
+            };
+
+            setChatMessages((prevMessages) => [...prevMessages, requestUpload]);
+          } else {
+            const botResponses = [
+              "Could you provide more details about your request so I can assist you better?",
+              "Sure, I can check that for you. Can I have your application ID, please?",
+              "To start a new application, I'll need some basic information. What type of housing are you applying for?",
+              "Thank you for providing the information. Your request has been updated successfully!",
+            ];
+            const randomResponse =
+              botResponses[Math.floor(Math.random() * botResponses.length)];
+            botResponse.text = randomResponse;
+
+            setChatMessages((prevMessages) => [...prevMessages, botResponse]);
+          }
+        }
 
         const botResponse: ChatMessage = {
           text: responseText,
@@ -82,23 +177,29 @@ const ResidentChatMainPage = () => {
         setChatMessages((prevMessages) => [...prevMessages, botResponse]);
       }, 500);
 
-      setInputValue("");
-      endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+      setInputValue(""); // Clear the input after sending the message
     }
   };
 
   return (
     <>
-      <Card style={{ borderRadius: "25px" }}>
+      <AdminNavbar />
+      <Card style={{ margin: "30px 60px auto 60px", borderRadius: "25px" }}>
         <div
           style={{
             maxWidth: "1111px",
             margin: "0 auto",
             display: "flex",
             flexDirection: "column",
-            height: "68vh",
+            height: "75vh",
           }}
         >
+          <div style={{ overflowY: "auto", flexGrow: 1 }}>
+            <Title level={2} style={{ textAlign: "center", marginTop: "40px" }}>
+              Hi Jane, how can Onetera help you?
+            </Title>
+          </div>
+
           <div
             style={{
               overflowY: "auto",
@@ -117,17 +218,14 @@ const ResidentChatMainPage = () => {
               }}
             >
               {[
-                `
-                Hi Christine,
-                I am a government administrative official reviewing your standard roofing permit submitted on 02-03-2024. Your roofing permit application is in process! To move forward, we need:
-                1. Roofing materials specs.
-                2. Roof slope/pitch details.
-                Please either reply with the documents listed above in the chat or upload them in your application hub.
-              `,
+                "I want to check the status of my current affordable housing applications.",
+                "I want to apply for affordable housing.",
+                "I want to apply for a permit.",
+                "I want to check the current status of my permits.",
               ].map((prompt, index) => (
                 <Card
                   key={index}
-                  style={{ cursor: "pointer" }}
+                  style={{ width: "23%", cursor: "pointer" }}
                   onClick={() => handlePromptClick(prompt)}
                 >
                   {prompt}
@@ -177,15 +275,18 @@ const ResidentChatMainPage = () => {
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <TextArea
                 rows={2}
-                onPressEnter={() => handleSendMessage(inputValue)}
+                showCount
                 value={inputValue}
                 autoSize={false}
                 onChange={handleInputChange}
+                onPressEnter={() => handleSendMessage(inputValue)}
+                maxLength={100}
                 placeholder="Type your request here"
                 style={{
                   borderRadius: "20px",
                   padding: "10px 20px",
                   height: "120px",
+
                   backgroundColor: "#F6F6F6",
                   resize: "none",
                 }}
