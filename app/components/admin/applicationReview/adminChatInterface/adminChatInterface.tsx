@@ -177,6 +177,7 @@ const ResidentChatMainPage = () => {
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <TextArea
                 rows={2}
+                onPressEnter={() => handleSendMessage(inputValue)}
                 value={inputValue}
                 autoSize={false}
                 onChange={handleInputChange}

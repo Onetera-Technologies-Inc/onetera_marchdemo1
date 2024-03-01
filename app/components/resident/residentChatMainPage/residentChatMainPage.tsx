@@ -279,6 +279,7 @@ const ResidentChatMainPage = () => {
                 value={inputValue}
                 autoSize={false}
                 onChange={handleInputChange}
+                onPressEnter={() => handleSendMessage(inputValue)}
                 maxLength={100}
                 placeholder="Type your request here"
                 style={{
