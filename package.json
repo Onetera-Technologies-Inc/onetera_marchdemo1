@@ -9,10 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@langchain/openai": "^0.0.16",
+    "@supabase/supabase-js": "^2.39.7",
+    "ai": "^3.0.6",
     "antd": "^5.14.1",
+    "langchain": "^0.1.25",
     "next": "14.1.0",
+    "openai": "^4.28.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-markdown": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
