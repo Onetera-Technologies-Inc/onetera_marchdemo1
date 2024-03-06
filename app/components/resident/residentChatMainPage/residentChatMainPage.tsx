@@ -92,7 +92,7 @@ const ResidentChatMainPage = () => {
     setMessages(tempMessages);
     setInputValue("");
 
-    const response = await fetch("/api", {
+    const response = await fetch("pages/api", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
