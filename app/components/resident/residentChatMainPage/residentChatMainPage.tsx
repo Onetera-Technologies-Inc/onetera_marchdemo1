@@ -92,18 +92,18 @@ const ResidentChatMainPage = () => {
     setMessages(tempMessages);
     setInputValue("");
 
-    const response = await fetch("pages/api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ messages: tempMessages }),
-    });
+    // const response = await fetch("pages/api", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ messages: tempMessages }),
+    // });
 
-    const data = await response.json();
-    const { output } = data;
+    // const data = await response.json();
+    // const { output } = data;
 
-    setMessages((prevMessages) => [...prevMessages, output]);
+    // setMessages((prevMessages) => [...prevMessages, output]);
     setIsLoading(false);
   };
 
