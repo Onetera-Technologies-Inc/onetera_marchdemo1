@@ -1,184 +1,114 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Button, Input, Card, Typography, Avatar } from "antd";
+import { Button, Input, Card, Typography, Avatar, Spin } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
-import { Upload, notification } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import ResidentStatusTable from "./residentStatusTable";
-import RequestDocumentUpload from "./requestDocumentUpload";
-import DocumentUploadList from "./documentUploadList";
 import AdminNavbar from "../../navigation/adminNavbar/adminNavbar";
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
-type ChatMessage = {
-  text: string | JSX.Element;
-  sender: "user" | "bot";
-};
-
 const ResidentChatMainPage = () => {
   const [inputValue, setInputValue] = useState("");
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const [userAgreedToUpload, setUserAgreedToUpload] = useState(false);
   const endOfMessagesRef = useRef<null | HTMLDivElement>(null);
-
-  const handleFileUpload = (info: any) => {
-    if (info.file.status === "error") {
-      notification.success({
-        message: "File Uploaded Successfully",
-        description: `${info.file.name} file uploaded successfully.`,
-      });
-
-      const thankYouMessage: ChatMessage = {
-        text: "Your documents have been successfully submitted and your application has been updated. We will alert you once the status of your application changes. You can also check your applications on your profile.  ",
-        sender: "bot",
-      };
-
-      setChatMessages((prevMessages) => [...prevMessages, thankYouMessage]);
-
-      const nextMessage: ChatMessage = {
-        text: "Would you like help with anything else?",
-        sender: "bot",
-      };
-
-      setChatMessages((prevMessages) => [...prevMessages, nextMessage]);
-    }
-  };
-
-  const uploadProps = {
-    name: "file",
-    action: "/upload",
-    headers: {
-      authorization: "authorization-text",
+  const [isLoading, setIsLoading] = useState(false);
+  const [messages, setMessages] = useState([
+    {
+      role: "assistant",
+      content: "",
     },
-    onChange: handleFileUpload,
-  };
+  ]);
+
+  // const handleFileUpload = (info: any) => {
+  //   if (info.file.status === "error") {
+  //     notification.success({
+  //       message: "File Uploaded Successfully",
+  //       description: `${info.file.name} file uploaded successfully.`,
+  //     });
+
+  //     const thankYouMessage: ChatMessage = {
+  //       text: "Your documents have been successfully submitted and your application has been updated. We will alert you once the status of your application changes. You can also check your applications on your profile.  ",
+  //       sender: "bot",
+  //     };
+
+  //     setChatMessages((prevMessages) => [...prevMessages, thankYouMessage]);
+
+  //     const nextMessage: ChatMessage = {
+  //       text: "Would you like help with anything else?",
+  //       sender: "bot",
+  //     };
+
+  //     setChatMessages((prevMessages) => [...prevMessages, nextMessage]);
+  //   }
+  // };
+
+  // const uploadProps = {
+  //   name: "file",
+  //   action: "/upload",
+  //   headers: {
+  //     authorization: "authorization-text",
+  //   },
+  //   onChange: handleFileUpload,
+  // };
 
   useEffect(() => {
     if (endOfMessagesRef.current) {
       endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [chatMessages]);
+  }, [messages]);
 
   useEffect(() => {
-    if (userAgreedToUpload) {
-      const statusMessage: ChatMessage = {
-        text: <DocumentUploadList />,
-        sender: "bot",
-      };
-      setChatMessages((prevMessages) => [...prevMessages, statusMessage]);
+    fetch("");
+  });
 
-      setChatMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          text: (
-            <Upload {...uploadProps}>
-              <Button icon={<UploadOutlined />}>
-                Please click here to Upload
-              </Button>
-            </Upload>
-          ),
-          sender: "bot",
-        },
-      ]);
-    }
-  }, [userAgreedToUpload]);
+  // useEffect(() => {
+  //   if (userAgreedToUpload) {
+  //     const statusMessage: ChatMessage = {
+  //       text: <DocumentUploadList />,
+  //       sender: "bot",
+  //     };
+  //     setChatMessages((prevMessages) => [...prevMessages, statusMessage]);
 
-  // Function to handle the click on chat prompts
+  //     setChatMessages((prevMessages) => [
+  //       ...prevMessages,
+  //       {
+  //         text: (
+  //           <Upload {...uploadProps}>
+  //             <Button icon={<UploadOutlined />}>
+  //               Please click here to Upload
+  //             </Button>
+  //           </Upload>
+  //         ),
+  //         sender: "bot",
+  //       },
+  //     ]);
+  //   }
+  // }, [userAgreedToUpload]);
+
   const handlePromptClick = (prompt: string) => {
     setInputValue(prompt);
   };
 
-  // Function to handle the input change
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(e.target.value);
-  };
+  const handleSendMessage = async (text: string = inputValue) => {
+    setIsLoading(true);
+    let tempMessages = [...messages, { role: "user", content: text }];
+    setMessages(tempMessages);
+    setInputValue("");
 
-  const handleSendMessage = (text: string = inputValue) => {
-    if (text.trim() !== "") {
-      setChatMessages([...chatMessages, { text: text, sender: "user" }]);
+    const response = await fetch("/api/hello", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ messages: tempMessages }),
+    });
 
-      //handle spanish
-      setTimeout(() => {
-        let responseText = "";
-        if (text.includes("solicitudes de vivienda")) {
-          responseText =
-            "Estoy verificando tus solicitudes. ¿Puedes confirmar tu fecha de nacimiento?";
-        } else if (text.includes("ID 12345")) {
-          responseText =
-            "Gracias. Hemos actualizado tu solicitud con el ID 12345.";
-        } else {
-          let botResponse: ChatMessage = {
-            text: "I'm here to help! Can you provide the missing documents?",
-            sender: "bot",
-          };
+    const data = await response.json();
+    const { output } = data;
 
-          // If the user's last message was about documents, ask for upload
-          if (text.toLowerCase().includes("documents")) {
-            botResponse.text =
-              "Please upload the necessary documents using the button below.";
-
-            setChatMessages((prevMessages) => [
-              ...prevMessages,
-              botResponse,
-              // Add a message component that allows document upload
-              {
-                text: (
-                  <Upload {...uploadProps}>
-                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                  </Upload>
-                ),
-                sender: "bot",
-              },
-            ]);
-          } else if (
-            text ==
-            "I want to check the status of my current affordable housing applications."
-          ) {
-            const statusMessage: ChatMessage = {
-              text: <ResidentStatusTable />,
-              sender: "bot",
-            };
-            setChatMessages((prevMessages) => [...prevMessages, statusMessage]);
-
-            const requestUpload: ChatMessage = {
-              text: (
-                <RequestDocumentUpload
-                  setUserAgreedToUpload={setUserAgreedToUpload}
-                />
-              ),
-              sender: "bot",
-            };
-
-            setChatMessages((prevMessages) => [...prevMessages, requestUpload]);
-          } else {
-            const botResponses = [
-              "Could you provide more details about your request so I can assist you better?",
-              "Sure, I can check that for you. Can I have your application ID, please?",
-              "To start a new application, I'll need some basic information. What type of housing are you applying for?",
-              "Thank you for providing the information. Your request has been updated successfully!",
-            ];
-            const randomResponse =
-              botResponses[Math.floor(Math.random() * botResponses.length)];
-            botResponse.text = randomResponse;
-
-            setChatMessages((prevMessages) => [...prevMessages, botResponse]);
-          }
-        }
-
-        const botResponse: ChatMessage = {
-          text: responseText,
-          sender: "bot",
-        };
-
-        setChatMessages((prevMessages) => [...prevMessages, botResponse]);
-      }, 500);
-
-      setInputValue(""); // Clear the input after sending the message
-    }
+    setMessages((prevMessages) => [...prevMessages, output]);
+    setIsLoading(false);
   };
 
   return (
@@ -194,19 +124,24 @@ const ResidentChatMainPage = () => {
             height: "75vh",
           }}
         >
-          <div style={{ overflowY: "auto", flexGrow: 1 }}>
-            <Title level={2} style={{ textAlign: "center", marginTop: "40px" }}>
-              Hi Jane, how can Onetera help you?
-            </Title>
-          </div>
-
           <div
             style={{
               overflowY: "auto",
-              flexGrow: 1, // This allows the chat area to take up all available space
-              marginBottom: "10px", // Add some space before the text input area
+              flexGrow: 1,
+              marginBottom: "10px",
             }}
           >
+            <div style={{ overflowY: "auto", flexGrow: 1 }}>
+              <Title
+                level={2}
+                style={{
+                  textAlign: "center",
+                  marginTop: "40px",
+                }}
+              >
+                Hi Jane, how can Onetera help you?
+              </Title>
+            </div>
             <Title level={5} style={{ marginTop: "20px" }}>
               Here are some recommended chat prompts to help you get started
             </Title>
@@ -232,9 +167,9 @@ const ResidentChatMainPage = () => {
                 </Card>
               ))}
             </div>
-            {chatMessages.map(
+            {messages.map(
               (message, index) =>
-                message.text && (
+                message.content && (
                   <div
                     key={index}
                     style={{
@@ -242,34 +177,39 @@ const ResidentChatMainPage = () => {
                       alignItems: "center",
                       marginBottom: "10px",
                       flexDirection:
-                        message.sender === "bot" ? "row" : "row-reverse",
+                        message.role === "assistant" ? "row" : "row-reverse",
                     }}
                   >
                     <Avatar
                       style={{
                         backgroundColor:
-                          message.sender === "bot" ? "#87d068" : "#1890ff",
-                        marginLeft: message.sender === "bot" ? "0" : "10px",
-                        marginRight: message.sender === "bot" ? "10px" : "0",
+                          message.role === "assistant" ? "#87d068" : "#1890ff",
+                        marginLeft: message.role === "assistant" ? "0" : "10px",
+                        marginRight:
+                          message.role === "assistant" ? "10px" : "0",
                       }}
                       icon={<UserOutlined />}
                     />
                     <div
                       style={{
                         backgroundColor:
-                          message.sender === "user" ? "#1890ff" : "#f0f0f0",
-                        color: message.sender === "user" ? "#fff" : "#000",
+                          message.role === "user" ? "#1890ff" : "#f0f0f0",
+                        color: message.role === "user" ? "#fff" : "#000",
                         padding: "10px",
                         borderRadius: "10px",
                         maxWidth: "80%",
                       }}
                     >
-                      <p style={{ margin: 0 }}>{message.text}</p>
+                      <p style={{ margin: 0 }}>{message.content}</p>
                     </div>
                   </div>
                 )
             )}
-            <div ref={endOfMessagesRef} />
+            <Spin spinning={isLoading}>
+              <div style={{ overflowY: "auto", flexGrow: 1 }}>
+                <div ref={endOfMessagesRef} />
+              </div>
+            </Spin>
           </div>
           <div style={{ borderTop: "1px solid #eaeaea", padding: "10px 20px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -277,8 +217,7 @@ const ResidentChatMainPage = () => {
                 rows={2}
                 showCount
                 value={inputValue}
-                autoSize={false}
-                onChange={handleInputChange}
+                onChange={(e) => setInputValue(e.target.value)}
                 onPressEnter={() => handleSendMessage(inputValue)}
                 maxLength={100}
                 placeholder="Type your request here"
@@ -286,7 +225,6 @@ const ResidentChatMainPage = () => {
                   borderRadius: "20px",
                   padding: "10px 20px",
                   height: "120px",
-
                   backgroundColor: "#F6F6F6",
                   resize: "none",
                 }}
