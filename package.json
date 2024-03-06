@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "flask-dev": "FLASK_DEBUG=1 pip3 install -r requirements.txt && python3 -m flask --app api/index --debug run -p 5000",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "flask": "python3 -m flask --app api/index  --debug run -p 5000"
   },
   "dependencies": {
     "@langchain/openai": "^0.0.16",

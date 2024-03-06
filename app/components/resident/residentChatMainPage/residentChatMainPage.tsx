@@ -58,6 +58,10 @@ const ResidentChatMainPage = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    fetch("");
+  });
+
   // useEffect(() => {
   //   if (userAgreedToUpload) {
   //     const statusMessage: ChatMessage = {
@@ -92,7 +96,7 @@ const ResidentChatMainPage = () => {
     setMessages(tempMessages);
     setInputValue("");
 
-    const response = await fetch("pages/api", {
+    const response = await fetch("/api/hello", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -163,52 +167,46 @@ const ResidentChatMainPage = () => {
                 </Card>
               ))}
             </div>
-
+            {messages.map(
+              (message, index) =>
+                message.content && (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginBottom: "10px",
+                      flexDirection:
+                        message.role === "assistant" ? "row" : "row-reverse",
+                    }}
+                  >
+                    <Avatar
+                      style={{
+                        backgroundColor:
+                          message.role === "assistant" ? "#87d068" : "#1890ff",
+                        marginLeft: message.role === "assistant" ? "0" : "10px",
+                        marginRight:
+                          message.role === "assistant" ? "10px" : "0",
+                      }}
+                      icon={<UserOutlined />}
+                    />
+                    <div
+                      style={{
+                        backgroundColor:
+                          message.role === "user" ? "#1890ff" : "#f0f0f0",
+                        color: message.role === "user" ? "#fff" : "#000",
+                        padding: "10px",
+                        borderRadius: "10px",
+                        maxWidth: "80%",
+                      }}
+                    >
+                      <p style={{ margin: 0 }}>{message.content}</p>
+                    </div>
+                  </div>
+                )
+            )}
             <Spin spinning={isLoading}>
               <div style={{ overflowY: "auto", flexGrow: 1 }}>
-                {messages.map(
-                  (message, index) =>
-                    message.content && (
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          marginBottom: "10px",
-                          flexDirection:
-                            message.role === "assistant"
-                              ? "row"
-                              : "row-reverse",
-                        }}
-                      >
-                        <Avatar
-                          style={{
-                            backgroundColor:
-                              message.role === "assistant"
-                                ? "#87d068"
-                                : "#1890ff",
-                            marginLeft:
-                              message.role === "assistant" ? "0" : "10px",
-                            marginRight:
-                              message.role === "assistant" ? "10px" : "0",
-                          }}
-                          icon={<UserOutlined />}
-                        />
-                        <div
-                          style={{
-                            backgroundColor:
-                              message.role === "user" ? "#1890ff" : "#f0f0f0",
-                            color: message.role === "user" ? "#fff" : "#000",
-                            padding: "10px",
-                            borderRadius: "10px",
-                            maxWidth: "80%",
-                          }}
-                        >
-                          <p style={{ margin: 0 }}>{message.content}</p>
-                        </div>
-                      </div>
-                    )
-                )}
                 <div ref={endOfMessagesRef} />
               </div>
             </Spin>
