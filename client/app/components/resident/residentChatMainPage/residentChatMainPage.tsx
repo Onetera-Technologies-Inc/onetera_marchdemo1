@@ -5,6 +5,7 @@ import { Button, Input, Card, Typography, Avatar, Spin } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import AdminNavbar from "../../navigation/adminNavbar/adminNavbar";
+import ResidentStatusTable from "./residentStatusTable";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -17,8 +18,10 @@ const ResidentChatMainPage = () => {
     {
       role: "assistant",
       content: "",
+      output_json: {},
     },
   ]);
+  const [tableData, setTableData] = useState([]);
 
   // const handleFileUpload = (info: any) => {
   //   if (info.file.status === "error") {
@@ -58,10 +61,6 @@ const ResidentChatMainPage = () => {
     }
   }, [messages]);
 
-  useEffect(() => {
-    fetch("");
-  });
-
   // useEffect(() => {
   //   if (userAgreedToUpload) {
   //     const statusMessage: ChatMessage = {
@@ -92,7 +91,10 @@ const ResidentChatMainPage = () => {
 
   const handleSendMessage = async (text: string = inputValue) => {
     setIsLoading(true);
-    let tempMessages = [...messages, { role: "user", content: text }];
+    let tempMessages = [
+      ...messages,
+      { role: "user", content: text, output_json: {} },
+    ];
     setMessages(tempMessages);
     setInputValue("");
 
@@ -111,8 +113,19 @@ const ResidentChatMainPage = () => {
     const data = await response.json();
     const { output } = data;
 
+    if (output.output_json && Object.keys(output.output_json).length > 0) {
+      try {
+        const outputJson = JSON.parse(output.output_json);
+        console.log(outputJson);
+        setTableData(outputJson);
+      } catch (error) {
+        setTableData([]);
+      }
+    } else {
+      setTableData([]);
+    }
+
     setMessages((prevMessages) => [...prevMessages, output]);
-    console.log(messages);
     setIsLoading(false);
   };
 
@@ -206,6 +219,11 @@ const ResidentChatMainPage = () => {
                       }}
                     >
                       <p style={{ margin: 0 }}>{message?.content}</p>
+                      <div>
+                        {message?.content && message.role === "assistant" && (
+                          <ResidentStatusTable tableData={tableData} />
+                        )}
+                      </div>
                     </div>
                   </div>
                 )

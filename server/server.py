@@ -104,8 +104,9 @@ from flask_cors import CORS
 import openai
 import pandas as pd
 from langchain_experimental.agents.agent_toolkits import create_csv_agent
-from langchain_openai import ChatOpenAI
+from openai import OpenAI
 import numpy as np
+from openai import ChatCompletion
 
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
@@ -121,14 +122,14 @@ df = pd.read_csv("titanic.csv")
 loader = CSVLoader(file_path="titanic.csv", encoding="utf-8", csv_args={'delimiter': ','})
 data1 = loader.load()
 
-embeddings = OpenAIEmbeddings(api_key="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")
+embeddings = OpenAIEmbeddings()
 vectorstore = FAISS.from_documents(data1, embeddings)
+llm_model = ChatOpenAI(temperature=0.0,model_name='gpt-3.5-turbo')
 chain = ConversationalRetrievalChain.from_llm(
-llm = ChatOpenAI(temperature=0.0,model_name='gpt-3.5-turbo',api_key="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"),
+llm = llm_model,
             retriever=vectorstore.as_retriever())
 
 
-openai.api_key = "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"
 
 @app.route('/api/hello', methods=['POST'])
 def hello_world():
@@ -139,13 +140,33 @@ def hello_world():
 
         result = chain({"question": messages, "chat_history": []})
         answer = result["answer"]
-      
+        
+        structured_prompt = f"""
+Given the detailed information below, convert it into a structured array of dictionary JSON format for displaying in a table on a website:
+- If the question is specifically about housing unit details (like rent, unit type, etc.), include the following details in JSON: propertyName,unitType,approximateMonthlyRent,householdSize, householdSize, maximumAnnualIncome,applicationPeriodStart,applicationPeriodEnd,city,submissionDate,status,waitlistPosition,waitlistSlots,availableUnits,lotteryDate
+- If the question is specifically about the process of application, focus on providing only the steps necessary for application. Do not include any information regarding the details of the units. 
+- If any specific detail is not present or not applicable, use "Not Applicable" as a value for that detail.
+- Ensure to format the data as key-value pairs for clear representation.
+
+Question: "{answer}"
+"""
+
+        client = OpenAI()
+        response = openai.completions.create(
+                model="gpt-3.5-turbo-instruct",
+                prompt=structured_prompt,
+                max_tokens=1024,                
+                )
+        
+        print(response.choices[0].text)
+        
 
         response_data = {
         'output': {
             'content': answer,
-            'role': 'assistant'  
-        }
+            'role': 'assistant',
+            'output_json': response.choices[0].text.strip()
+        },
        }
         return jsonify(response_data), 200
         
